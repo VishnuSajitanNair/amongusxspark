@@ -6,6 +6,7 @@ import themeSong from "@/assets/theme-song.mp3.asset.json";
 export function ThemeMusic() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const enabledRef = useRef(true);
+  const suspendedRef = useRef(false);
   const [enabled, setEnabled] = useState(true);
   const [playing, setPlaying] = useState(false);
 
@@ -14,18 +15,24 @@ export function ThemeMusic() {
     if (!audio) return;
     audio.volume = 0.45;
     const start = () => {
-      if (enabledRef.current && audio.paused) void audio.play().catch(() => {});
+      if (enabledRef.current && !suspendedRef.current && audio.paused) void audio.play().catch(() => {});
     };
     const onInteraction = (event: Event) => {
-      if (event.target instanceof Element && event.target.closest('[data-music-toggle]')) return;
+      if (event.target instanceof Element && event.target.closest('[data-music-toggle], [data-music-skip]')) return;
       start();
     };
+    const onSuspend = () => { suspendedRef.current = true; audio.pause(); };
+    const onResume = () => { suspendedRef.current = false; start(); };
     start();
+    window.addEventListener("theme-music:suspend", onSuspend);
+    window.addEventListener("theme-music:resume", onResume);
     document.addEventListener("pointerdown", onInteraction);
     document.addEventListener("keydown", onInteraction);
     return () => {
       document.removeEventListener("pointerdown", onInteraction);
       document.removeEventListener("keydown", onInteraction);
+      window.removeEventListener("theme-music:suspend", onSuspend);
+      window.removeEventListener("theme-music:resume", onResume);
       audio.pause();
     };
   }, []);
@@ -36,7 +43,7 @@ export function ThemeMusic() {
     setEnabled(next);
     const audio = audioRef.current;
     if (!audio) return;
-    if (next) void audio.play().catch(() => {});
+    if (next && !suspendedRef.current) void audio.play().catch(() => {});
     else audio.pause();
   };
 
