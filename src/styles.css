@@ -143,6 +143,24 @@
   --impostor: oklch(0.55 0.22 27);
   --impostor-foreground: oklch(0.98 0 0);
   --space: oklch(0.08 0.01 270);
+  --cursor-illumination: oklch(1 0 0 / 7%);
+  --cursor-illumination-soft: oklch(1 0 0 / 2%);
+}
+
+.cursor-light {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle 220px at var(--cursor-x, -300px) var(--cursor-y, -300px), var(--cursor-illumination), var(--cursor-illumination-soft) 45%, transparent 100%);
+  transition: opacity 250ms ease;
+}
+
+.cursor-light[data-visible="true"] { opacity: 1; }
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-light { display: none; }
 }
 
 @utility btn-impostor {
