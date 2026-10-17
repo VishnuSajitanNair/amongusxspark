@@ -10,10 +10,10 @@ export function CursorLight() {
       if (!light || !canIlluminate.matches || event.pointerType === "touch") return;
       light.style.setProperty("--cursor-x", `${event.clientX}px`);
       light.style.setProperty("--cursor-y", `${event.clientY}px`);
-      light.dataset.visible = "true";
+      light.dataset["visible"] = "true";
     };
     const hideLight = () => {
-      if (lightRef.current) lightRef.current.dataset.visible = "false";
+      if (lightRef.current) lightRef.current.dataset["visible"] = "false";
     };
     window.addEventListener("pointermove", moveLight);
     document.documentElement.addEventListener("pointerleave", hideLight);
