@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <main id="top" className="relative min-h-screen overflow-hidden">
       <header className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-4 sm:p-6">
         <img src={logo.url} alt="Spark logo" className="h-14 w-14 rounded-xl ring-1 ring-foreground/10 sm:h-16 sm:w-16" />
         <nav className="flex items-center gap-2 sm:gap-3">
