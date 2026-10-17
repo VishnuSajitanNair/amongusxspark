@@ -132,13 +132,36 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+@theme inline {
+  --color-impostor: var(--impostor);
+  --color-impostor-foreground: var(--impostor-foreground);
+  --font-display: "Bungee", sans-serif;
+  --font-sans: "Space Grotesk", sans-serif;
+}
+
+:root {
+  --impostor: oklch(0.55 0.22 27);
+  --impostor-foreground: oklch(0.98 0 0);
+  --space: oklch(0.08 0.01 270);
+}
+
+@utility btn-impostor {
+  background: var(--impostor);
+  color: var(--impostor-foreground);
+  box-shadow: 0 6px 0 oklch(0.35 0.16 27), 0 0 40px color-mix(in oklab, var(--impostor) 60%, transparent);
+  transition: transform .15s, box-shadow .15s;
+  &:hover { transform: translateY(-2px); box-shadow: 0 8px 0 oklch(0.35 0.16 27), 0 0 60px var(--impostor); }
+  &:active { transform: translateY(4px); box-shadow: 0 2px 0 oklch(0.35 0.16 27); }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--space);
+    color: oklch(0.98 0 0);
+    font-family: var(--font-sans);
   }
 }
