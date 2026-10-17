@@ -47,7 +47,7 @@ export function ThemeMusic() {
       <Button
         variant="ghost"
         size="icon"
-        className="nav-impostor shrink-0 p-0"
+        className="shrink-0 rounded-full border border-impostor/35 bg-impostor/10 p-0 text-impostor-foreground hover:bg-impostor/20 hover:text-impostor-foreground"
         data-music-toggle
         aria-label={label}
         aria-pressed={enabled}
