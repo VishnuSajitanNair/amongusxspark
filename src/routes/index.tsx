@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import hero from "@/assets/hero.png.asset.json";
 import logo from "@/assets/spark-logo.jpg.asset.json";
+import { CalendarDays, Clock3, MapPin } from "lucide-react";
+import { ThemeMusic } from "@/components/theme-music";
+import { eventDetails } from "@/lib/event-details";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -9,6 +12,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Find the impostor. Join Among Us x Spark at IIIT Bhopal — register now." },
       { property: "og:title", content: "Among Us x Spark — IIIT Bhopal Edition" },
       { property: "og:description", content: "Find the impostor. Join Among Us x Spark at IIIT Bhopal." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -20,6 +25,7 @@ function Index() {
       <header className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-4 sm:p-6">
         <img src={logo.url} alt="Spark logo" className="h-14 w-14 rounded-xl ring-1 ring-foreground/10 sm:h-16 sm:w-16" />
         <nav className="flex items-center gap-2 sm:gap-3">
+          <ThemeMusic />
           <a href="#top" className="nav-impostor">Home</a>
           <a href="#event" className="nav-impostor hidden sm:inline-flex">Event</a>
           <a href="#register" className="nav-impostor nav-impostor--solid">Register</a>
@@ -30,9 +36,13 @@ function Index() {
         <img
           src={hero.url}
           alt="Among Us x Spark — IIIT Bhopal Edition"
-          className="img-blend w-full"
+          className="img-blend theme-image-motion w-full"
         />
-        <p className="mt-10 text-center text-lg opacity-70">There is an impostor among us. Will you find them?</p>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-base text-impostor-foreground/80 sm:text-lg">
+          <span className="inline-flex items-center gap-2"><CalendarDays className="size-5 text-impostor" aria-hidden="true" /><time dateTime={eventDetails.date}>14 Nov 2026</time></span>
+          <span className="inline-flex items-center gap-2"><Clock3 className="size-5 text-impostor" aria-hidden="true" /><time dateTime={eventDetails.startTime}>4 pm</time><span>–</span><time dateTime={eventDetails.endTime}>8 pm</time></span>
+          <span className="inline-flex items-center gap-2"><MapPin className="size-5 text-impostor" aria-hidden="true" />{eventDetails.location}</span>
+        </div>
         <a id="register" href="#register" className="btn-impostor mt-6 rounded-full px-12 py-4 font-display text-xl tracking-wider sm:text-2xl">
           Register Now
         </a>

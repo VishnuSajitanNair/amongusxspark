@@ -154,6 +154,20 @@
   &:active { transform: translateY(4px); box-shadow: 0 2px 0 oklch(0.35 0.16 27); }
 }
 
+@keyframes theme-image-drift {
+  0%, 100% { transform: translateY(0) rotate(-0.35deg) scale(1); }
+  50% { transform: translateY(-10px) rotate(0.35deg) scale(1.015); }
+}
+
+.theme-image-motion {
+  animation: theme-image-drift 8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-image-motion { animation: none; }
+}
+
 /* Fades the hero image's edges into the dark space background */
 @utility img-blend {
   mask-image:
