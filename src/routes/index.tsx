@@ -5,6 +5,8 @@ import { CalendarDays, Clock3, MapPin } from "lucide-react";
 import { ThemeMusic } from "@/components/theme-music";
 import { eventDetails } from "@/lib/event-details";
 import { CursorLight } from "@/components/cursor-light";
+import { HowToPlay } from "@/components/how-to-play";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,13 +25,14 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main id="top" className="relative min-h-screen overflow-hidden">
+      <div className="star-field" aria-hidden="true" />
       <CursorLight />
       <header className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-4 sm:p-6">
         <img src={logo.url} alt="Spark logo" className="h-14 w-14 rounded-xl ring-1 ring-foreground/10 sm:h-16 sm:w-16" />
         <nav className="flex items-center gap-2 sm:gap-3">
           <ThemeMusic />
           <a href="#top" className="nav-impostor">Home</a>
-          <a href="#event" className="nav-impostor hidden sm:inline-flex">Event</a>
+          <Button asChild variant="ghost" className="nav-impostor h-auto px-3 text-xs sm:px-4 sm:text-sm"><a href="#how-to-play">HOW TO PLAY</a></Button>
           <a href="#register" className="nav-impostor nav-impostor--solid">Register</a>
         </nav>
       </header>
@@ -52,6 +55,7 @@ function Index() {
           Step out of the virtual lobby and into the shadowy corridors of your own hostel wing for an intense, real-life match of Among Us. Speed-run physical tasks across the floor while covert Impostors stalk the halls to take down the crew one by one. Read the room, sniff out the lies in high-stakes emergency debates, and eject the traitors before they wipe out the entire wing. Can you survive the shift, or will you end up floating out the airlock?
         </p>
       </section>
+      <HowToPlay />
     </main>
   );
 }

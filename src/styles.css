@@ -135,6 +135,7 @@
 @theme inline {
   --color-impostor: var(--impostor);
   --color-impostor-foreground: var(--impostor-foreground);
+  --color-space: var(--space);
   --font-display: "Bungee", sans-serif;
   --font-sans: "Space Grotesk", sans-serif;
 }
@@ -143,9 +144,38 @@
   --impostor: oklch(0.55 0.22 27);
   --impostor-foreground: oklch(0.98 0 0);
   --space: oklch(0.08 0.01 270);
-  --cursor-illumination: oklch(1 0 0 / 7%);
-  --cursor-illumination-soft: oklch(1 0 0 / 2%);
+  --cursor-illumination: oklch(1 0 0 / 15%);
+  --cursor-illumination-soft: oklch(1 0 0 / 4%);
+  --star-bright: oklch(1 0 0 / 85%);
+  --star-soft: oklch(1 0 0 / 45%);
+  --tile-glow: 0 0 22px oklch(1 0 0 / 10%);
 }
+
+html { scroll-behavior: smooth; }
+
+.star-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 37px 61px, var(--star-bright) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 149px 193px, var(--star-soft) 0 .7px, transparent 1.3px),
+    radial-gradient(circle at 231px 87px, var(--star-bright) 0 .8px, transparent 1.5px),
+    radial-gradient(circle at 91px 273px, var(--star-soft) 0 .6px, transparent 1.2px);
+  background-size: 317px 359px, 409px 431px, 541px 487px, 263px 311px;
+}
+
+.play-tile { transition: border-color 200ms ease, box-shadow 200ms ease; }
+.play-tile:hover { border-color: var(--star-bright); box-shadow: var(--tile-glow); }
+.play-description { scrollbar-width: thin; }
+
+@media (max-width: 420px) {
+  #top > header { gap: .5rem; padding-inline: .75rem; }
+  #top > header > img { width: 2.75rem; height: 2.75rem; }
+  #top > header .nav-impostor { padding-inline: .6rem; font-size: .65rem; letter-spacing: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 .cursor-light {
   position: fixed;
