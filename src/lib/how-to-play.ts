@@ -3,11 +3,12 @@ import roleSound from "@/assets/role-assignment.mp3.asset.json";
 import tasksVideo from "@/assets/tasks.webm.asset.json";
 import tasksSound from "@/assets/tasks.mp3.asset.json";
 import eliminationVideo from "@/assets/elimination.webm.asset.json";
-import eliminationSound from "@/assets/elimination.mp3.asset.json";
+import eliminationSound from "@/assets/elimination-new.mp3.asset.json";
 import emergencyVideo from "@/assets/emergency.webm.asset.json";
 import emergencySound from "@/assets/emergency.mp3.asset.json";
 import winningVideo from "@/assets/winning.webm.asset.json";
-import rulesVideo from "@/assets/rules.webm.asset.json";
+import rulesVideo from "@/assets/rules-new.webm.asset.json";
+import rulesSound from "@/assets/rules-sound.mp3.asset.json";
 import victorySound from "@/assets/victory.mp3.asset.json";
 
 export const gameRules = {
@@ -50,7 +51,7 @@ export const howToPlay = [
     description: `Victory in the wing is decided by speed and deception in equal measure, with two entirely distinct paths to the winner's circle. The Crewmates seize victory the moment they successfully unmask and vote out every hidden Impostor in emergency council, or by sheer discipline if every surviving member races through their chores and turns in fully verified task manifests to the Game Master before the body count piles up. On the flip side, the Impostors clinch the game the instant their covert strikes dwindle the crew's numbers down to parity—meaning the count of living Impostors equals the remaining Crewmates—sealing the fate of the hostel floor in total sabotage and letting the traitors walk away unchecked.`,
   },
   {
-    id: "rules", title: "RULES", video: rulesVideo.url, sound: victorySound.url,
+    id: "rules", title: "RULES", video: rulesVideo.url, sound: rulesSound.url,
     description: `To keep the match fair, safe, and free from administrative chaos, every participant must strictly adhere to the floor’s core code of conduct. Hallways operate under absolute radio silence—no side conversations, whispers, or hand gestures are permitted outside of official emergency council, meaning players can only talk when the room gathers to deliberate. Movement is strictly capped at a ${gameRules.movement} pace to prevent slips, collisions, or disturbance to neighbors, and physical contact is limited exclusively to the gentle elimination shoulder tap. Furthermore, private study halls, washrooms, and closed-door dorms remain completely off-limits, while eliminated "ghost" players are bound by an honor code never to speak, gesture, or shadow their killer to give the game away.`,
   },
 ];
