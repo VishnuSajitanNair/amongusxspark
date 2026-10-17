@@ -156,8 +156,14 @@
 
 /* Fades the hero image's edges into the dark space background */
 @utility img-blend {
-  mask-image: radial-gradient(ellipse 52% 52% at 50% 50%, black 55%, transparent 98%);
-  -webkit-mask-image: radial-gradient(ellipse 52% 52% at 50% 50%, black 55%, transparent 98%);
+  mask-image:
+    linear-gradient(to right, transparent, black 14%, black 86%, transparent),
+    linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, black 14%, black 86%, transparent),
+    linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
 }
 
 @utility nav-impostor {
