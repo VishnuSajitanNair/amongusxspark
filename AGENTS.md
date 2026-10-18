@@ -14,3 +14,4 @@
 - Keep pointer illumination in the dedicated CursorLight component with non-interactive overlay styling; disable it for touch and reduced motion to preserve accessibility and page controls.
 - Keep How To Play media and descriptions in the shared how-to-play module; the dedicated section component owns popup state and one-shot sound playback so closing always stops sound.
 - Keep concrete match rules in the shared how-to-play module with adjacent rule tests so timing and victory conditions remain verifiable.
+- Keep decorative stars and extracted character sprites in SpaceBackground, with pointer-free layers and reduced-motion support, to keep decoration separate from page controls.
