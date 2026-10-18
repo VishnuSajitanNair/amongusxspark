@@ -1,4 +1,7 @@
 # Tasks
+- [x] Add restrained cursor-responsive stars and floating uploaded characters.
+- [x] Refine Registration and compact How To Play; update scholar example and navigation.
+- [x] Verify navigation, registration interaction, and desktop/mobile appearance.
 - [x] Animate the existing theme image with reduced-motion support.
 - [x] Add uploaded theme song and default-on music toggle, handling browser autoplay restrictions.
 - [x] Show supplied event date, time, and location and verify the page.
