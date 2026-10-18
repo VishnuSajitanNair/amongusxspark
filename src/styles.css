@@ -176,14 +176,16 @@ html { scroll-behavior: smooth; }
     radial-gradient(circle at 37px 61px, var(--star-bright) 0 1px, transparent 1.6px),
     radial-gradient(circle at 149px 193px, var(--star-soft) 0 .7px, transparent 1.3px),
     radial-gradient(circle at 231px 87px, var(--star-bright) 0 .8px, transparent 1.5px),
-    radial-gradient(circle at 91px 273px, var(--star-soft) 0 .6px, transparent 1.2px);
-  background-size: 257px 299px, 349px 371px, 461px 407px, 233px 271px;
+    radial-gradient(circle at 91px 273px, var(--star-soft) 0 .6px, transparent 1.2px),
+    radial-gradient(circle at 173px 41px, var(--star-soft) 0 .5px, transparent 1px),
+    radial-gradient(circle at 61px 199px, var(--star-bright) 0 .7px, transparent 1.4px);
+  background-size: 211px 243px, 293px 317px, 379px 347px, 197px 227px, 331px 281px, 251px 263px;
   transform: translate(var(--parallax-x, 0px), var(--parallax-y, 0px));
   transition: transform 900ms ease-out;
 }
 .star-field--near {
-  background-image: radial-gradient(circle at 79px 143px, var(--star-bright) 0 1.3px, transparent 2px), radial-gradient(circle at 263px 319px, var(--star-soft) 0 1px, transparent 1.8px);
-  background-size: 487px 433px, 593px 547px;
+  background-image: radial-gradient(circle at 79px 143px, var(--star-bright) 0 1.3px, transparent 2px), radial-gradient(circle at 263px 319px, var(--star-soft) 0 1px, transparent 1.8px), radial-gradient(circle at 401px 89px, var(--star-bright) 0 1.1px, transparent 1.9px), radial-gradient(circle at 167px 361px, var(--star-soft) 0 .9px, transparent 1.6px);
+  background-size: 437px 393px, 523px 487px, 577px 449px, 481px 521px;
   transform: translate(calc(var(--parallax-x, 0px) * 1.7), calc(var(--parallax-y, 0px) * 1.7));
 }
 .floating-crew { position: absolute; inset: 0; transform: translate(calc(var(--parallax-x, 0px) * .5), calc(var(--parallax-y, 0px) * .5)); transition: transform 1200ms ease-out; }
@@ -192,10 +194,22 @@ html { scroll-behavior: smooth; }
 .crew-position--2 { right: 3%; top: 48%; width: 48px; }
 .crew-position--3 { left: 5%; top: 79%; width: 43px; }
 .crew-position--4 { right: 6%; top: 9%; width: 38px; }
+.crew-position--5 { left: 17%; top: 5%; width: 34px; opacity: .3; }
+.crew-position--6 { right: 15%; top: 63%; width: 50px; opacity: .3; }
+.crew-position--7 { left: 21%; top: 56%; width: 40px; opacity: .26; }
+.crew-position--8 { right: 19%; top: 87%; width: 36px; opacity: .26; }
 .crew-drift { width: 100%; height: auto; animation: crew-float 23s ease-in-out infinite; }
 .crew-position--2 .crew-drift { animation-duration: 29s; animation-delay: -11s; }
 .crew-position--3 .crew-drift { animation-duration: 26s; animation-delay: -7s; }
 .crew-position--4 .crew-drift { animation-duration: 31s; animation-delay: -18s; }
+.crew-position--5 .crew-drift { animation-duration: 27s; animation-delay: -3s; }
+.crew-position--6 .crew-drift { animation-duration: 33s; animation-delay: -21s; }
+.crew-position--7 .crew-drift { animation-duration: 25s; animation-delay: -14s; }
+.crew-position--8 .crew-drift { animation-duration: 30s; animation-delay: -9s; }
+.crew-tint--orange { filter: hue-rotate(195deg) saturate(1.25); }
+.crew-tint--gold { filter: hue-rotate(110deg) saturate(1.3); }
+.crew-tint--violet { filter: hue-rotate(140deg) saturate(1.2); }
+.crew-tint--lime { filter: hue-rotate(85deg) saturate(1.35); }
 @keyframes crew-float {
   0%, 100% { transform: translate(0, 0) rotate(-18deg); }
   35% { transform: translate(14px, -30px) rotate(8deg); }
@@ -205,6 +219,30 @@ html { scroll-behavior: smooth; }
 .registration-panel input { min-width: 0; height: 48px; border-radius: 6px; transition: border-color 180ms ease, box-shadow 180ms ease; }
 .registration-panel input:focus-visible { border-color: var(--impostor); box-shadow: 0 0 0 3px color-mix(in oklab, var(--impostor) 18%, transparent); }
 .registration-submit { box-shadow: 0 0 24px color-mix(in oklab, var(--registration-ready) 20%, transparent); }
+.character-panel {
+  align-self: start;
+  background: var(--registration-surface);
+  border: 1px solid color-mix(in oklab, var(--impostor-foreground) 20%, transparent);
+  border-top: 3px solid var(--impostor);
+  box-shadow: var(--registration-shadow);
+}
+.character-frame {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--impostor-foreground) 12%, transparent);
+  background: radial-gradient(circle at 50% 35%, color-mix(in oklab, var(--impostor) 22%, transparent), transparent 72%);
+}
+.character-img {
+  width: 70%;
+  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--star-bright) 35%, transparent));
+  animation: character-float 6s ease-in-out infinite;
+}
+@keyframes character-float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
 @media (max-width: 640px) {
   .crew-position { width: 32px; opacity: .22; }
   .crew-position--2 { width: 28px; right: 1%; }

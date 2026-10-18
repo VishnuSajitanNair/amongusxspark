@@ -4,7 +4,16 @@ import pink from "@/assets/crewmate-pink.png.asset.json";
 import green from "@/assets/crewmate-green.png.asset.json";
 import red from "@/assets/crewmate-red.png.asset.json";
 
-const characters = [cyan, pink, green, red];
+const placements = [
+  { src: cyan, tint: "", key: "cyan-1" },
+  { src: pink, tint: "", key: "pink-1" },
+  { src: green, tint: "", key: "green-1" },
+  { src: red, tint: "", key: "red-1" },
+  { src: cyan, tint: "crew-tint--orange", key: "cyan-2" },
+  { src: pink, tint: "crew-tint--gold", key: "pink-2" },
+  { src: green, tint: "crew-tint--violet", key: "green-2" },
+  { src: red, tint: "crew-tint--lime", key: "red-2" },
+];
 
 export function SpaceBackground() {
   const ref = useRef<HTMLDivElement>(null);
@@ -41,7 +50,11 @@ export function SpaceBackground() {
       <div className="star-field star-field--far" />
       <div className="star-field star-field--near" />
       <div className="floating-crew">
-        {characters.map((character, i) => <div key={character.asset_id} className={`crew-position crew-position--${i + 1}`}><img src={character.url} alt="" className="crew-drift" /></div>)}
+        {placements.map((placement, i) => (
+          <div key={placement.key} className={`crew-position crew-position--${i + 1}`}>
+            <img src={placement.src.url} alt="" className={`crew-drift ${placement.tint}`} />
+          </div>
+        ))}
       </div>
     </div>
   );
