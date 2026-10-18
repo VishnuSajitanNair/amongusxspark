@@ -3,7 +3,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { UserRound, IdCard, Mail, Phone, ArrowRight, Check, RotateCcw } from "lucide-react";
+import { UserRound, IdCard, Mail, Phone, ArrowRight, Check, RotateCcw, Dices } from "lucide-react";
+import cyan from "@/assets/crewmate-cyan.png.asset.json";
+import pink from "@/assets/crewmate-pink.png.asset.json";
+import green from "@/assets/crewmate-green.png.asset.json";
+import red from "@/assets/crewmate-red.png.asset.json";
 
 const registrationSchema = z.object({
   name: z.string().trim().nonempty().max(100),
@@ -14,9 +18,12 @@ const registrationSchema = z.object({
 
 const empty = { name: "", scholarNo: "", email: "", phone: "" };
 
+const characters = [cyan, pink, green, red];
+
 export function RegistrationForm() {
   const [form, setForm] = useState(empty);
   const [submitted, setSubmitted] = useState(false);
+  const [character, setCharacter] = useState(() => Math.floor(Math.random() * characters.length));
 
   const valid = registrationSchema.safeParse(form).success;
 
@@ -34,53 +41,76 @@ export function RegistrationForm() {
     setSubmitted(false);
   };
 
+  const randomise = () =>
+    setCharacter((c) => {
+      let next = c;
+      while (next === c) next = Math.floor(Math.random() * characters.length);
+      return next;
+    });
+
+  const characterName = form.name.trim() || "YOUR CHARACTER";
+  const activeCharacter = characters[character];
+
   return (
-    <section id="register" className="relative mx-auto max-w-2xl scroll-mt-8 px-6 pb-20 pt-8 sm:px-8" aria-labelledby="register-title">
+    <section id="register" className="relative mx-auto max-w-4xl scroll-mt-8 px-6 pb-20 pt-8 sm:px-8" aria-labelledby="register-title">
       <h2 id="register-title" className="mb-8 text-center font-display text-3xl text-impostor-foreground sm:text-4xl">Registration</h2>
-      {submitted ? (
-        <div className="registration-panel rounded-lg p-8 text-center sm:p-10">
-          <div className="mx-auto mb-6 flex size-14 items-center justify-center rounded-full border border-registration-ready/50 bg-registration-ready/10 text-registration-ready"><Check className="size-7" aria-hidden="true" /></div>
-          <p className="font-display text-xl leading-relaxed text-impostor-foreground sm:text-2xl">
-            THANK YOU. YOUR RESPONSE HAS BEEN RECORDED
-          </p>
-          <Button onClick={reset} variant="outline" data-music-skip className="mt-8 rounded-full border-impostor-foreground/40 bg-transparent px-8 py-5 font-display text-sm tracking-wider text-impostor-foreground hover:bg-impostor-foreground/10 hover:text-impostor-foreground">
-            <RotateCcw aria-hidden="true" />
-            Submit Another Response
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
+        {submitted ? (
+          <div className="registration-panel rounded-lg p-8 text-center sm:p-10">
+            <div className="mx-auto mb-6 flex size-14 items-center justify-center rounded-full border border-registration-ready/50 bg-registration-ready/10 text-registration-ready"><Check className="size-7" aria-hidden="true" /></div>
+            <p className="font-display text-xl leading-relaxed text-impostor-foreground sm:text-2xl">
+              THANK YOU. YOUR RESPONSE HAS BEEN RECORDED
+            </p>
+            <Button onClick={reset} variant="outline" data-music-skip className="mt-8 rounded-full border-impostor-foreground/40 bg-transparent px-8 py-5 font-display text-sm tracking-wider text-impostor-foreground hover:bg-impostor-foreground/10 hover:text-impostor-foreground">
+              <RotateCcw aria-hidden="true" />
+              Submit Another Response
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={submit} noValidate className="registration-panel grid grid-cols-1 gap-6 rounded-lg p-6 sm:grid-cols-2 sm:p-8">
+            <div className="space-y-2">
+              <Label htmlFor="reg-name" className="text-impostor-foreground/85"><UserRound className="size-4 text-impostor" aria-hidden="true" />Name <span className="text-impostor">*</span></Label>
+              <Input id="reg-name" value={form.name} onChange={set("name")} required maxLength={100} autoComplete="name" className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="Your full name" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="reg-scholar" className="text-impostor-foreground/85"><IdCard className="size-4 text-impostor" aria-hidden="true" />Scholar No. <span className="text-impostor">*</span></Label>
+              <Input id="reg-scholar" value={form.scholarNo} onChange={set("scholarNo")} required maxLength={20} className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="26U020XXX" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="reg-email" className="text-impostor-foreground/85"><Mail className="size-4 text-impostor" aria-hidden="true" />Email ID <span className="text-impostor">*</span></Label>
+              <Input id="reg-email" type="email" value={form.email} onChange={set("email")} required maxLength={255} autoComplete="email" className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="you@example.com" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="reg-phone" className="text-impostor-foreground/85"><Phone className="size-4 text-impostor" aria-hidden="true" />Phone Number <span className="text-impostor">*</span></Label>
+              <Input id="reg-phone" type="tel" value={form.phone} onChange={set("phone")} required autoComplete="tel" className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="10-digit mobile number" />
+            </div>
+            <Button
+              type="submit"
+              disabled={!valid}
+              data-music-skip
+              className={
+                valid
+                  ? "registration-submit sm:col-span-2 w-full rounded-lg bg-registration-ready py-6 font-display text-lg text-space transition-colors hover:bg-registration-ready-hover"
+                  : "sm:col-span-2 w-full cursor-not-allowed rounded-lg bg-impostor-foreground py-6 font-display text-lg text-space disabled:opacity-100"
+              }
+            >
+              Submit
+              <ArrowRight aria-hidden="true" />
+            </Button>
+          </form>
+        )}
+
+        <aside className="character-panel flex flex-col items-center gap-5 rounded-lg p-6 text-center" aria-live="polite">
+          <h3 className="min-h-6 break-words font-display text-lg leading-snug text-impostor-foreground">{characterName}</h3>
+          <div className="character-frame w-full">
+            <img key={activeCharacter.asset_id} src={activeCharacter.url} alt="Your Among Us character" className="character-img" />
+          </div>
+          <Button onClick={randomise} data-music-skip className="w-full rounded-full bg-impostor-foreground px-6 py-5 font-display text-sm tracking-wider text-space transition-colors hover:bg-impostor-foreground/90">
+            <Dices aria-hidden="true" />
+            RANDOMISE
           </Button>
-        </div>
-      ) : (
-        <form onSubmit={submit} noValidate className="registration-panel grid grid-cols-1 gap-6 rounded-lg p-6 sm:grid-cols-2 sm:p-8">
-          <div className="space-y-2">
-            <Label htmlFor="reg-name" className="text-impostor-foreground/85"><UserRound className="size-4 text-impostor" aria-hidden="true" />Name <span className="text-impostor">*</span></Label>
-            <Input id="reg-name" value={form.name} onChange={set("name")} required maxLength={100} autoComplete="name" className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="Your full name" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="reg-scholar" className="text-impostor-foreground/85"><IdCard className="size-4 text-impostor" aria-hidden="true" />Scholar No. <span className="text-impostor">*</span></Label>
-            <Input id="reg-scholar" value={form.scholarNo} onChange={set("scholarNo")} required maxLength={20} className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="26U020XXX" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="reg-email" className="text-impostor-foreground/85"><Mail className="size-4 text-impostor" aria-hidden="true" />Email ID <span className="text-impostor">*</span></Label>
-            <Input id="reg-email" type="email" value={form.email} onChange={set("email")} required maxLength={255} autoComplete="email" className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="you@example.com" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="reg-phone" className="text-impostor-foreground/85"><Phone className="size-4 text-impostor" aria-hidden="true" />Phone Number <span className="text-impostor">*</span></Label>
-            <Input id="reg-phone" type="tel" value={form.phone} onChange={set("phone")} required autoComplete="tel" className="border-impostor-foreground/25 bg-space text-impostor-foreground placeholder:text-impostor-foreground/40" placeholder="10-digit mobile number" />
-          </div>
-          <Button
-            type="submit"
-            disabled={!valid}
-            data-music-skip
-            className={
-              valid
-                ? "registration-submit sm:col-span-2 w-full rounded-lg bg-registration-ready py-6 font-display text-lg text-space transition-colors hover:bg-registration-ready-hover"
-                : "sm:col-span-2 w-full cursor-not-allowed rounded-lg bg-impostor-foreground py-6 font-display text-lg text-space disabled:opacity-100"
-            }
-          >
-            Submit
-            <ArrowRight aria-hidden="true" />
-          </Button>
-        </form>
-      )}
+        </aside>
+      </div>
     </section>
   );
 }
