@@ -4,7 +4,9 @@ export function CursorLight() {
   const lightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canIlluminate = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+    const canIlluminate = window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    );
     const moveLight = (event: PointerEvent) => {
       const light = lightRef.current;
       if (!light || !canIlluminate.matches || event.pointerType === "touch") return;

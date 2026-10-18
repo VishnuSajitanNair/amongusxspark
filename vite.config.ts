@@ -12,4 +12,23 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  nitro: false,
+  vite: {
+    plugins: [
+      {
+        name: "local-assets-fallback",
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            if (req.url && req.url.startsWith("/__l5e/assets-v1/")) {
+              const filename = req.url.split("/").pop()?.split("?")[0];
+              if (filename) {
+                req.url = `/assets/${filename}`;
+              }
+            }
+            next();
+          });
+        },
+      },
+    ],
+  },
 });

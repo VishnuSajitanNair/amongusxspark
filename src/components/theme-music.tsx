@@ -14,25 +14,56 @@ export function ThemeMusic() {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = 0.45;
+
     const start = () => {
-      if (enabledRef.current && !suspendedRef.current && audio.paused) void audio.play().catch(() => {});
+      if (enabledRef.current && !suspendedRef.current && audio.paused) {
+        audio
+          .play()
+          .then(() => setPlaying(true))
+          .catch(() => {
+            // Autoplay may be delayed by browser policy until first user interaction
+          });
+      }
     };
+
     const onInteraction = (event: Event) => {
-      if (event.target instanceof Element && event.target.closest('[data-music-toggle], [data-music-skip]')) return;
+      if (event.target instanceof Element && event.target.closest("[data-music-toggle]")) {
+        return;
+      }
       start();
     };
-    const onSuspend = () => { suspendedRef.current = true; audio.pause(); };
-    const onResume = () => { suspendedRef.current = false; start(); };
+
+    const onSuspend = () => {
+      suspendedRef.current = true;
+      audio.pause();
+    };
+
+    const onResume = () => {
+      suspendedRef.current = false;
+      start();
+    };
+
+    // Attempt autoplay immediately
     start();
+    audio.addEventListener("canplay", start, { once: true });
+
+    const interactionEvents = ["click", "pointerdown", "touchstart", "keydown", "scroll", "wheel"];
+    interactionEvents.forEach((ev) => {
+      window.addEventListener(ev, onInteraction, { passive: true });
+    });
+
     window.addEventListener("theme-music:suspend", onSuspend);
     window.addEventListener("theme-music:resume", onResume);
-    document.addEventListener("pointerdown", onInteraction);
-    document.addEventListener("keydown", onInteraction);
+    window.addEventListener("focus", start);
+
     return () => {
-      document.removeEventListener("pointerdown", onInteraction);
-      document.removeEventListener("keydown", onInteraction);
+      interactionEvents.forEach((ev) => {
+        window.removeEventListener(ev, onInteraction);
+      });
       window.removeEventListener("theme-music:suspend", onSuspend);
       window.removeEventListener("theme-music:resume", onResume);
+      window.removeEventListener("focus", start);
+      audio.removeEventListener("canplay", start);
       audio.pause();
     };
   }, []);
@@ -50,7 +81,15 @@ export function ThemeMusic() {
   const label = enabled ? "Turn music off" : "Turn music on";
   return (
     <>
-      <audio ref={audioRef} src={themeSong.url} autoPlay loop preload="auto" onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+      <audio
+        ref={audioRef}
+        src={themeSong.url}
+        autoPlay
+        loop
+        preload="auto"
+        onPlaying={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+      />
       <Button
         variant="ghost"
         size="icon"
