@@ -6,6 +6,7 @@ import { ThemeMusic } from "@/components/theme-music";
 import { eventDetails } from "@/lib/event-details";
 import { CursorLight } from "@/components/cursor-light";
 import { HowToPlay } from "@/components/how-to-play";
+import { RegistrationForm } from "@/components/registration-form";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -48,7 +49,7 @@ function Index() {
           <span className="inline-flex items-center gap-2"><Clock3 className="size-5 text-impostor" aria-hidden="true" /><time dateTime={eventDetails.startTime}>4 pm</time><span>–</span><time dateTime={eventDetails.endTime}>8 pm</time></span>
           <span className="inline-flex items-center gap-2"><MapPin className="size-5 text-impostor" aria-hidden="true" />{eventDetails.location}</span>
         </div>
-        <a id="register" href="#register" className="btn-impostor mt-6 rounded-full px-12 py-4 font-display text-xl tracking-wider sm:text-2xl">
+        <a href="#register" className="btn-impostor mt-6 rounded-full px-12 py-4 font-display text-xl tracking-wider sm:text-2xl">
           Register Now
         </a>
         <p className="mt-10 max-w-3xl text-pretty text-center text-base leading-8 text-impostor-foreground/75 sm:text-lg">
@@ -56,6 +57,7 @@ function Index() {
         </p>
       </section>
       <HowToPlay />
+      <RegistrationForm />
     </main>
   );
 }

@@ -166,13 +166,13 @@ html { scroll-behavior: smooth; }
 }
 
 .play-tile {
-  border: 1.5px solid color-mix(in oklab, var(--star-bright) 70%, transparent);
-  box-shadow: 0 0 12px color-mix(in oklab, var(--star-bright) 35%, transparent), 0 0 28px color-mix(in oklab, var(--star-bright) 15%, transparent);
+  border: 3px solid var(--star-bright);
+  box-shadow: 0 0 18px color-mix(in oklab, var(--star-bright) 55%, transparent), 0 0 40px color-mix(in oklab, var(--star-bright) 25%, transparent);
   transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 .play-tile:hover, .play-tile:focus-visible {
-  border-color: var(--star-bright);
-  box-shadow: 0 0 18px color-mix(in oklab, var(--star-bright) 60%, transparent), 0 0 44px color-mix(in oklab, var(--star-bright) 25%, transparent);
+  border-color: oklch(1 0 0);
+  box-shadow: 0 0 26px color-mix(in oklab, var(--star-bright) 80%, transparent), 0 0 60px color-mix(in oklab, var(--star-bright) 40%, transparent);
   transform: translateY(-2px);
 }
 .play-description {

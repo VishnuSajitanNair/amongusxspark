@@ -7,3 +7,4 @@
 - [x] Brighten cursor light and add small white background stars.
 - [x] Add six looping How To Play tiles, matching audio, full descriptions, and dismissible popups.
 - [x] Update navigation and verify playback, dismissal, and mobile layout.
+- [x] Add Registration section with validated form, green-when-complete submit, success message, and thicker/brighter video tile borders.
